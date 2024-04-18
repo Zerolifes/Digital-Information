@@ -1,0 +1,17 @@
+close all;
+image = imread("image.png");
+imwrite(image,'image.png');
+s = dir('image.png');
+subplot(221); imshow(image); title(string(s.bytes) + 'Bytes, Original');
+img = quantization(image, 2);
+imwrite(img,"img1.png");
+s = dir('img1.png');
+subplot(222); imshow(img); title(string(s.bytes) + "Bytes, Bits = 2");
+img = quantization(image, 4);
+imwrite(img,"img2.png");
+s = dir('img2.png');
+subplot(223); imshow(img); title(string(s.bytes) + "Bytes, Bits = 4");
+img = quantization(image, 1);
+imwrite(img,"img4.png");
+s = dir('img4.png');
+subplot(224); imshow(img); title(string(s.bytes) + "Bytes, Bits = 1");

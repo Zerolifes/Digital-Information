@@ -1,0 +1,9 @@
+function v = biDecode(code)
+p = 1;
+v = 0;
+while code>0
+    v = v + p*mod(code,10);
+     = floor(code/10);
+    p = p * 2;
+end
+end
