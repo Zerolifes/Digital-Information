@@ -1,0 +1,35 @@
+clear *;
+st = 'PHAN NGOC QUY TRAN VAN TU NGUYEN MINH TRUNG DUONG DUC MANH DUONG VAN QUAN';
+as = double(st);
+bas = uint8(dec2bin(as,7)) - 48;
+bl4 = [reshape(bas',1,[]),0];
+bl4 = double(reshape(bl4,4,[])');
+G = [1 0 0 0 1 1 1;
+     0 1 0 0 0 1 1;
+     0 0 1 0 1 0 1;
+     0 0 0 1 1 1 0];
+bl7 =  mod(uint8(bl4(:,:)*G),2);
+error = zeros(size(bl7),'uint8');
+error(:,1) = 1;
+r = double(xor(bl7,error));
+H = [1 0 1 1 1 0 0;
+     1 1 0 1 0 1 0;
+     1 1 1 0 0 0 1];
+s = double(mod(uint8(r(:,:)*H'),2));
+E = [0 0 0 0 0 0 0;
+     0 0 0 0 0 0 1;
+     0 0 0 0 0 1 0;
+     0 1 0 0 0 0 0;
+     0 0 0 0 1 0 0;
+     0 0 1 0 0 0 0;
+     0 0 0 1 0 0 0;
+     1 0 0 0 0 0 0];
+e = 1+s(:,:)*[4 2 1]';
+e = E(e,:);
+r = double(xor(r, e));
+r = r(:,1:4);
+r = reshape(r',1,[]);
+r = r(1:end-1);
+r = reshape(r,7,[])';
+infor = char(bin2dec(char(r+48)))'
+
